@@ -8,7 +8,7 @@ int main() {
 
 	char bar[1024];
 	FILE* input;
-	input = fopen("input.txt", "r");
+	input = fopen("day1-input.txt", "r");
 
 	printf ("The dial starts by pointing at %i\n", dial);
 	while (fgets(bar, sizeof(bar), input)) {
