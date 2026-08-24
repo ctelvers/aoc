@@ -18,7 +18,7 @@ int main(void)
 	int* right = malloc(1000 * sizeof(int));
 
 	count = 0;
-	input = fopen("day2-input.txt", "r");
+	input = fopen("day1-input.txt", "r");
 	while (fgets(line, sizeof(line), input)) {
 		sscanf(line, " %i %i ", &left[count], &right[count]);
 		count++;
