@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+	char bar[1024];
+	int num = 0;
+	char ch;
+	int n = 0;
+	char dial = 0;
+	FILE* input;
+	input = fopen("day1-2018-input.txt", "r");
+
+	printf ("the starting number is %i\n", dial);
+	while (fgets(bar, sizeof(bar), input)) {
+		printf("n=%i, i=%i results in %i\n", n, atoi(bar), n + atoi(bar));
+		n += atoi(bar);
+	}
+	return 0;
+
+}
