@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#define MAX 1000
+
+void print(int* numbers, int n) {
+	for (int j = n; j >= -n; j--) {
+		for (int i = -n; i < n; i++) {
+			if (numbers[(i+MAX)*MAX+j+MAX] == 0) {
+				printf (" ");
+			} else {
+				printf ("%c", numbers[(i+MAX)*MAX+j+MAX] + '0');
+			}
+		}
+		printf("\n");
+	}
+}
+
+int main()
+{
+	int* numbers = malloc(4 * MAX * 4 * MAX * sizeof(int));
+	int num;
+	int dir = 0;
+	int x = 0;
+	int y = 0;
+	int i = 0;
+	bool found = false;
+	char line[1024];
+	FILE* input = fopen("day1-2016-input.txt", "r");
+	while (fgets(line, sizeof(line), input)) {
+		i = 0;
+		while (line[i] != 0) {
+			//			printf("dir %c \n", line[i]);
+			if (line[i] == 'R') {
+				//				printf("This goes right \n");
+				dir += 90;
+			} else if(line[i] == 'L') {
+				//				printf("This goes left \n");
+				dir -= 90;
+			}
+			//			printf("%i\t%i\n", x, y);
+			while (dir < 0) {
+				dir += 360;
+			};
+			while (dir > 359) {
+				dir -= 360;
+			};
+			i++;
+			num = 0;
+			while(isdigit(line[i])) {
+				num = 10 * num + (line[i] - '0');
+				i++;
+			}
+			//			printf("num %i in dir %i\n", num, dir);
+			switch (dir) {
+			case 0:
+				for (int i = 0; i < num; i++) {
+					if (numbers[(x + MAX)* MAX +(y + MAX)] == 0) {
+						numbers[(x + MAX)* MAX +(y + MAX)] ++;
+					} else {
+						printf("north %i\n", x + y);
+						print(numbers, 200);
+						printf("x=%i y=%i x+y=%i\n", x, y, abs(x)+abs(y));
+						exit(0);
+					}
+					y++;
+				}
+				break;
+			case 90:
+				for (int i = 0; i < num; i++) {
+					if (numbers[(x + MAX)* MAX +(y + MAX)] == 0) {
+						numbers[(x + MAX)* MAX +(y + MAX)] ++;
+					} else {
+						printf("east %i\n", x + y);
+						printf("x=%i y=%i x+y=%i\n", x, y, abs(x)+abs(y));
+						exit(0);
+					}
+					x++;
+				}
+				break;
+			case 180:
+				for (int i = 0; i < num; i++) {
+					if (numbers[(x + MAX)* MAX +(y + MAX)] == 0) {
+						numbers[(x + MAX)* MAX +(y + MAX)] ++;
+					} else {
+						printf("south %i\n", x + y);
+						printf("x=%i y=%i x+y=%i\n", x, y, abs(x)+abs(y));
+						exit(0);
+					}
+					y--;
+				}
+				break;
+			case 270:
+				for (int i = 0; i < num; i++) {
+					if (numbers[(x + MAX)* MAX +(y + MAX)] == 0) {
+						numbers[(x + MAX)* MAX +(y + MAX)] ++;
+					} else {
+						printf("west %i\n", x + y);
+						printf("x=%i y=%i x+y=%i\n", x, y, abs(x)+abs(y));
+						exit(0);
+					}
+					x--;
+				}
+				break;
+			}
+			i+=2;
+		}
+
+	}
+	printf("The answer is %i", x + y);
+	return 0;
+}
